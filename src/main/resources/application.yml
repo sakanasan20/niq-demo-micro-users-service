@@ -15,4 +15,4 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_SERVER_URL}
   instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}-${spring.application.instance_id:${random.int(10000)}}:${server.port}
