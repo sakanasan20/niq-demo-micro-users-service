@@ -3,6 +3,7 @@ package tw.niq.micro.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,15 @@ public class UserConrtoller {
 	private final UserService userService;
 	private final UserMapper userMapper;
 	private final CycleAvoidingMappingContext context;
+	private final Environment environment;
+	
+	@GetMapping(
+			path = "/check", 
+			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public String check() {
+		String port = environment.getProperty("local.server.port");
+		return "Users Service: running on port " + port + " ...";
+	}
 	
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<UserModel> getUsers(
