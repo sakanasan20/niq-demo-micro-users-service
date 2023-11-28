@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,11 @@ public class UserServiceImpl implements UserService {
 	private final UserMapper userMapper;
 	private final CycleAvoidingMappingContext context;
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+	}
+	
 	@Override
 	public List<UserDto> getUsers(int page, int limit) {
 		if (page > 0) page = page - 1;
@@ -46,7 +53,7 @@ public class UserServiceImpl implements UserService {
 	public UserDto create(UserDto userDto) {
 		User user = userMapper.toUser(userDto, context);
 		user.setUserId(UUID.randomUUID().toString());
-		user.setEncryptedPassword(userDto.getPassword());
+		user.setPassword(userDto.getPassword());
 		User userSaved = userRepository.save(user);
 		return userMapper.toUserDto(userSaved, context);
 	}

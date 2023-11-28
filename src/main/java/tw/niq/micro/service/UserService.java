@@ -2,9 +2,11 @@ package tw.niq.micro.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import tw.niq.micro.dto.UserDto;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
 	List<UserDto> getUsers(int page, int limit);
 
