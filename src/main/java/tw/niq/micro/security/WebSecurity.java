@@ -1,5 +1,6 @@
 package tw.niq.micro.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,13 +19,37 @@ import tw.niq.micro.service.UserService;
 @Configuration
 public class WebSecurity {
 	
+	@Value("${tw.niq.login.url}")
+    private String loginUrl;
+	
+	@Value("${tw.niq.token.secret}")
+    private String tokenSecret;
+	
+	@Value("${tw.niq.token.expiration}")
+    private String tokenExpiration;
+	
+	public static String LOGIN_URL;
+	public static String TOKEN_SECRET;
+	public static String TOKEN_EXPIRATION;
 	public static final String TOKEN_PREFIX = "Bearer ";
-	public static final String TOKEN_SECRET = "AaMckyLM973x9qPw9u5G7k7EYxYn0f0jP0FERRbwbsEEUKvpkYWudx57AJRgTbh3";
-	public static final String TOKEN_EXPIRATION = "3600000";
-	public static final String LOGIN_URL = "/api/v1/users/login";
 	
 	private final UserService userService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Value("${tw.niq.login.url}")
+    public void setLoginUrl(String loginUrl) {
+		WebSecurity.LOGIN_URL = loginUrl;
+    }
+	
+	@Value("${tw.niq.token.secret}")
+    public void setTokenSecret(String tokenSecret) {
+		WebSecurity.TOKEN_SECRET = tokenSecret;
+    }
+	
+	@Value("${tw.niq.token.expiration}")
+    public void setTokenExpiration(String tokenExpiration) {
+		WebSecurity.TOKEN_EXPIRATION = tokenExpiration;
+    }
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {

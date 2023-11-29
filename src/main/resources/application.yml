@@ -19,3 +19,10 @@ eureka:
       defaultZone: ${EUREKA_SERVER_URL}
   instance:
     instance-id: ${spring.application.name}-${spring.application.instance_id:${random.int(10000)}}:${server.port}
+tw:
+  niq:
+    token:
+      secret: ${TOKEN_SECRET}
+      expiration: ${TOKEN_EXPIRATION}
+    login:
+      url: ${LOGIN_URL}
