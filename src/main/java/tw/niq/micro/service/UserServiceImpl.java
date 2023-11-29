@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+		return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
 	}
 	
 	@Override
@@ -62,9 +62,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto update(String userId, UserDto userDto) {
 		User user = userRepository.findByUserId(userId).orElseThrow(() -> new UserServiceException());
-		if(userDto.getFirstName() != null && !userDto.getFirstName().equals(user.getFirstName())) user.setFirstName(userDto.getFirstName());
-		if(userDto.getLastName() != null && !userDto.getLastName().equals(user.getLastName())) user.setLastName(userDto.getLastName());
-		if(userDto.getEmail() != null && !userDto.getEmail().equals(user.getEmail())) user.setEmail(userDto.getEmail());
+		if(userDto.getFirstName() != null && !userDto.getFirstName().equals(user.getFirstName())) 
+			user.setFirstName(userDto.getFirstName());
+		if(userDto.getLastName() != null && !userDto.getLastName().equals(user.getLastName())) 
+			user.setLastName(userDto.getLastName());
+		if(userDto.getEmail() != null && !userDto.getEmail().equals(user.getEmail())) 
+			user.setEmail(userDto.getEmail());
 		User userSaved = userRepository.save(user);
 		return userMapper.toUserDto(userSaved, context);
 	}

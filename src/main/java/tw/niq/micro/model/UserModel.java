@@ -23,6 +23,10 @@ public class UserModel {
 	private String userId;
 	
 	@NotBlank
+	@Size(max = 16)
+	private String username;
+	
+	@NotBlank
 	@Size(min = 8, max = 16)
 	private String password;
 	
