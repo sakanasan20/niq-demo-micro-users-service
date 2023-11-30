@@ -2,20 +2,8 @@ spring:
   profiles:
     active:
     - dev
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USR}
-    password: ${DB_PWD}
-  jpa:
-    hibernate:
-      ddl-auto: update
   application:
     name: ${APP_NAME}
-  rabbitmq:
-    host: ${RABBITMQ_HOST}
-    port: ${RABBITMQ_PORT}
-    username: ${RABBITMQ_USR}
-    password: ${RABBITMQ_PWD}
 server:
   port: ${SERVER_PORT:0}
 eureka:
@@ -24,16 +12,3 @@ eureka:
       defaultZone: ${EUREKA_SERVER_URL}
   instance:
     instance-id: ${spring.application.name}-${spring.application.instance_id:${random.int(10000)}}:${server.port}
-tw:
-  niq:
-    token:
-      secret: ${TOKEN_SECRET}
-      expiration: ${TOKEN_EXPIRATION}
-    login:
-      url: ${LOGIN_URL}
-    config:
-      common:
-        version: 0.0.0
-      service:
-        version: 0.0.0
-      
