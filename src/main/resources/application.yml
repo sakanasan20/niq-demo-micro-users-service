@@ -11,6 +11,11 @@ spring:
       ddl-auto: update
   application:
     name: ${APP_NAME}
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USR}
+    password: ${RABBITMQ_PWD}
 server:
   port: ${SERVER_PORT:0}
 eureka:
@@ -26,3 +31,9 @@ tw:
       expiration: ${TOKEN_EXPIRATION}
     login:
       url: ${LOGIN_URL}
+    config:
+      common:
+        version: 0.0.0
+      service:
+        version: 0.0.0
+      

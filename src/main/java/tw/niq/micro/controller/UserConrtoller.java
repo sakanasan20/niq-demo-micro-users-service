@@ -43,6 +43,17 @@ public class UserConrtoller {
 		return "Users Service: running on port " + port + " ...";
 	}
 	
+	@GetMapping(
+			path = "/config", 
+			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public String config() {
+		
+		String commonConfigVersion = environment.getProperty("tw.niq.config.common.version");
+		String serviceConfigVersion = environment.getProperty("tw.niq.config.service.version");
+		
+		return "Common Config Version: " + commonConfigVersion + ", Service Config Version: " + serviceConfigVersion;
+	}
+	
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<UserModel> getUsers(
 			@RequestParam(value = "page", defaultValue = "1", required = false) int page, 
