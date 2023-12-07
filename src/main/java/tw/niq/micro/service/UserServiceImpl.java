@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tw.niq.micro.client.ReportServiceClient;
 import tw.niq.micro.domain.User;
 import tw.niq.micro.dto.UserDto;
 import tw.niq.micro.exception.UserServiceException;
 import tw.niq.micro.mapper.CycleAvoidingMappingContext;
 import tw.niq.micro.mapper.UserMapper;
+import tw.niq.micro.model.ReportModel;
 import tw.niq.micro.repository.UserRepository;
 
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
 	private final CycleAvoidingMappingContext context;
+	private final ReportServiceClient reportServiceClient;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -76,6 +79,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteByUserId(String userId) {
 		userRepository.deleteByUserId(userId);
+	}
+
+	@Override
+	public List<ReportModel> getUserReports(String userId) {		
+		return reportServiceClient.getReports(userId);
 	}
 
 }

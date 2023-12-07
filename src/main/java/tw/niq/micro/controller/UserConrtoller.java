@@ -22,6 +22,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import tw.niq.micro.mapper.CycleAvoidingMappingContext;
 import tw.niq.micro.mapper.UserMapper;
+import tw.niq.micro.model.ReportModel;
 import tw.niq.micro.model.UserModel;
 import tw.niq.micro.service.UserService;
 
@@ -83,6 +84,13 @@ public class UserConrtoller {
 	public ResponseEntity<Void> deleteUser(@PathVariable("userId") String userId) {
 		userService.deleteByUserId(userId);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(
+			path = "/{userId}/reports", 
+			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public List<ReportModel> getUserReports(@PathVariable("userId") String userId) {
+		return userService.getUserReports(userId);
 	}
 	
 }

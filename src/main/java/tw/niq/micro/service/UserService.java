@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import tw.niq.micro.dto.UserDto;
+import tw.niq.micro.model.ReportModel;
 
 public interface UserService extends UserDetailsService {
 
@@ -16,6 +17,8 @@ public interface UserService extends UserDetailsService {
 
 	UserDto update(String userId, UserDto userDto);
 
-	void deleteByUserId(String userId);	
+	void deleteByUserId(String userId);
+
+	List<ReportModel> getUserReports(String userId);	
 	
 }

@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import feign.Logger;
+
 @Configuration
 public class SecurityBean {
 
@@ -17,6 +19,11 @@ public class SecurityBean {
 	@Bean
 	public HttpExchangeRepository httpExchangeRepository() {
 		return new InMemoryHttpExchangeRepository();
+	}
+	
+	@Bean
+	Logger.Level feignLoggerLevel() {
+		return Logger.Level.FULL;
 	}
 	
 }
