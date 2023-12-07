@@ -3,6 +3,7 @@ package tw.niq.micro.security;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -71,7 +72,10 @@ public class WebSecurity {
 			.sessionManagement((sessionManagement) -> sessionManagement
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests((authorize) -> authorize
-					.anyRequest().permitAll());
+					.requestMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+					.requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+					.requestMatchers("/api/v1/users/**").permitAll()
+					.anyRequest().authenticated());
 		
 		return http.build();
 	}
