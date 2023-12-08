@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tw.niq.micro.client.ReportServiceClient;
 import tw.niq.micro.domain.User;
 import tw.niq.micro.dto.UserDto;
@@ -21,6 +22,7 @@ import tw.niq.micro.mapper.UserMapper;
 import tw.niq.micro.model.ReportModel;
 import tw.niq.micro.repository.UserRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -82,7 +84,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<ReportModel> getUserReports(String userId) {		
+	public List<ReportModel> getUserReports(String userId) {
+		log.debug("Getting User Reports: " + userId);
 		return reportServiceClient.getReports(userId);
 	}
 
