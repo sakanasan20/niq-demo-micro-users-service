@@ -1,18 +1,1 @@
-spring:
-  profiles:
-    active:
-    - dev
-  application:
-    name: ${APP_NAME}
-server:
-  port: ${SERVER_PORT:0}
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_SERVER_URL}
-  instance:
-    instance-id: ${spring.application.name}-${spring.application.instance_id:${random.int(10000)}}:${server.port}
-management:
-  zipkin:
-    tracing:
-      endpoint: ${ZIPKIN_SERVER_URL}/api/v2/spans
+
