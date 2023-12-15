@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import lombok.RequiredArgsConstructor;
 import tw.niq.micro.service.UserService;
 
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
@@ -63,9 +65,12 @@ public class WebSecurity {
 		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
 		customAuthenticationFilter.setFilterProcessesUrl(LOGIN_URL);
 		
+		CustomAuthorizationFilter customAuthorizationFilter = new CustomAuthorizationFilter(authenticationManager);
+		
 		http
 			.authenticationManager(authenticationManager)
 			.addFilter(customAuthenticationFilter)
+			.addFilter(customAuthorizationFilter)
 			.headers(headers -> headers.
 					frameOptions(frameOptions -> frameOptions.disable()))
 			.csrf(csrf -> csrf.disable())

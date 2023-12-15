@@ -7,6 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +46,7 @@ public class UserConrtoller {
 		return "Users Service: running on port " + port + " ...";
 	}
 	
+	@PreAuthorize("hasRole('ADMIN') and hasAuthority('user.read')")
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<UserModel> getUsers(
 			@RequestParam(value = "page", defaultValue = "1", required = false) int page, 
@@ -54,6 +57,7 @@ public class UserConrtoller {
 				.collect(Collectors.toList());
 	}
 	
+	@PreAuthorize("( hasRole('ADMIN') or principal == #userId) and hasAuthority('user.read')")
 	@GetMapping(
 			path = "/{userId}", 
 			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
@@ -89,8 +93,10 @@ public class UserConrtoller {
 	@GetMapping(
 			path = "/{userId}/reports", 
 			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<ReportModel> getUserReports(@PathVariable("userId") String userId) {
-		return userService.getUserReports(userId);
+	public List<ReportModel> getUserReports(
+			@PathVariable("userId") String userId, 
+			@RequestHeader("Authorization") String authorization) {
+		return userService.getUserReports(userId, authorization);
 	}
 	
 }

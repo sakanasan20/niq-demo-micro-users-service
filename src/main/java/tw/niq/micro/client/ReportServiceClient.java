@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -23,9 +24,14 @@ public interface ReportServiceClient {
 	@CircuitBreaker(
 			name = "report-service", 
 			fallbackMethod="getReportsFallback")
-	public List<ReportModel> getReports(@RequestParam(value = "userId", required = false) String userId);
+	public List<ReportModel> getReports(
+			@RequestParam(value = "userId", required = false) String userId, 
+			@RequestHeader("Authorization") String authorization);
 
-	default List<ReportModel> getReportsFallback(String userId, Throwable exception) {
+	default List<ReportModel> getReportsFallback(
+			String userId, 
+			String authorization, 
+			Throwable exception) {
 		logger.debug("userId: " + userId);
 		logger.debug("exception.getMessage(): " + exception.getMessage());
 		return new ArrayList<>();

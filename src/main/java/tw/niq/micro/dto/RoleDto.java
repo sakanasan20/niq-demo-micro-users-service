@@ -16,7 +16,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class UserDto {
+public class RoleDto {
+	
 	private Long id;
 	
 	private Long version;
@@ -24,29 +25,15 @@ public class UserDto {
 	private LocalDateTime createdDate;
 	
 	private LocalDateTime lastModifiedDate;
-
-	private String firstName;
 	
-	private String lastName;
-	
-	private String email;
-	
-	private String userId;
-	
-	private String username;
-	
-	private String password;
-	
-	private Boolean accountNonExpired;
-
-	private Boolean accountNonLocked;
-
-	private Boolean credentialsNonExpired;
-
-	private Boolean enabled;
+	private String name;
 	
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private Set<RoleDto> roles;
+	private Set<AuthorityDto> authorities;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private Set<UserDto> users;
+
 }

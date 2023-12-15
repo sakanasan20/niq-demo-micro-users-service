@@ -60,8 +60,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		SecretKey secretKey = new SecretKeySpec(tokenSecretBytes, SignatureAlgorithm.HS512.getJcaName());
 		Instant now = Instant.now();
 		
-		String userId = ((User) authResult.getPrincipal()).getUserId();
+		User authUser = (User) authResult.getPrincipal();
+		String userId = authUser.getUserId();
 		String token = Jwts.builder()
+				.claim("scope", authUser.getAuthorities())
 				.setSubject(userId)
 				.setExpiration(Date.from(now.plusMillis(Long.parseLong(WebSecurity.TOKEN_EXPIRATION))))
 				.setIssuedAt(Date.from(now))

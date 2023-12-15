@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tw.niq</groupId>
-	<artifactId>micro</artifactId>
+	<artifactId>users-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>niq-demo-micro-users-service</name>
 	<description>NIQ Microservices Demo - Users Service</description>

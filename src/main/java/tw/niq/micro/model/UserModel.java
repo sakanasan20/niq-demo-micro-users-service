@@ -1,14 +1,40 @@
 package tw.niq.micro.model;
 
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter 
+@Setter 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 @Builder
 public class UserModel {
+	
+	@JsonIgnore
+	private Long id;
+	
+	private Long version;
+
+	private LocalDateTime createdDate;
+	
+	private LocalDateTime lastModifiedDate;
+	
+	private String userId;
 
 	@NotBlank
 	private String firstName;
@@ -20,8 +46,6 @@ public class UserModel {
 	@Email
 	private String email;
 	
-	private String userId;
-	
 	@NotBlank
 	@Size(max = 16)
 	private String username;
@@ -29,5 +53,17 @@ public class UserModel {
 	@NotBlank
 	@Size(min = 8, max = 16)
 	private String password;
+	
+	private Boolean accountNonExpired;
+
+	private Boolean accountNonLocked;
+
+	private Boolean credentialsNonExpired;
+
+	private Boolean enabled;
+	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private Set<RoleModel> roles;
 	
 }

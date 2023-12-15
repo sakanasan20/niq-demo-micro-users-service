@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<ReportModel> getUserReports(String userId) {
+	public List<ReportModel> getUserReports(String userId, String authorization) {
 		log.debug("Getting User Reports: " + userId);
-		return reportServiceClient.getReports(userId);
+		return reportServiceClient.getReports(userId, authorization);
 	}
 
 }

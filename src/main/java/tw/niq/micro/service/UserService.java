@@ -19,6 +19,6 @@ public interface UserService extends UserDetailsService {
 
 	void deleteByUserId(String userId);
 
-	List<ReportModel> getUserReports(String userId);	
+	List<ReportModel> getUserReports(String userId, String authorization);	
 	
 }

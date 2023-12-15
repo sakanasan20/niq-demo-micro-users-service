@@ -1,7 +1,6 @@
 package tw.niq.micro.dto;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,7 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class UserDto {
+public class AuthorityDto {
+	
 	private Long id;
 	
 	private Long version;
@@ -24,29 +24,7 @@ public class UserDto {
 	private LocalDateTime createdDate;
 	
 	private LocalDateTime lastModifiedDate;
+	
+	private String name;
 
-	private String firstName;
-	
-	private String lastName;
-	
-	private String email;
-	
-	private String userId;
-	
-	private String username;
-	
-	private String password;
-	
-	private Boolean accountNonExpired;
-
-	private Boolean accountNonLocked;
-
-	private Boolean credentialsNonExpired;
-
-	private Boolean enabled;
-	
-	@ToString.Exclude
-	@EqualsAndHashCode.Exclude
-	private Set<RoleDto> roles;
-	
 }
